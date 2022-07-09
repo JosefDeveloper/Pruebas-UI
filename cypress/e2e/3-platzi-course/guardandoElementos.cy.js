@@ -24,8 +24,13 @@ describe('Guardando elementos', () => {
             expect(labels.length).to.equal(16)
 
             cy.wrap(inputs).should('have.length', 15)
+
+            cy.log('soy la longitud', inputs.length)
+            cy.task('log', inputs.length)
         })
         
+        cy.get('input[placeholder="First Name"]').debug()
+
 	})
 
 })

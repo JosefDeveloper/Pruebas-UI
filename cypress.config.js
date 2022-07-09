@@ -31,6 +31,13 @@ module.exports = defineConfig({
 		baseUrl: 'https://demoqa.com',
 
 		setupNodeEvents(on, config) {
+			on('task', {
+				log(message) {
+					console.log(`Soy el console log del task ${message}`)
+					return null
+				},
+			})
+
 			return findBrowser().then((browser) => {
 				return {
 					browsers: config.browsers.concat(browser),
