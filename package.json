@@ -1,16 +1,18 @@
 {
-  "name": "pruebas-ui",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "cypress open --e2e"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "cypress": "^10.3.0",
-    "prettier": "^2.7.1"
-  }
+	"name": "pruebas-ui",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test:ui": "cypress open --e2e",
+		"test:headless": "cypress run",
+		"test:headless:spec": "cypress run --spec cypress/e2e/3-platzi-course/esperandoPorElementos.cy.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"cypress": "^10.3.0",
+		"prettier": "^2.7.1"
+	}
 }
