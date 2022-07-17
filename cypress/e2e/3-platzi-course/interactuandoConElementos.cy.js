@@ -108,7 +108,7 @@ describe('Interactuando con los elementos', () => {
 		// cy.get('#react-select-6-option-3').click()
 	})
 
-	it.only('Interactuando con tablas', function () {
+	it('Interactuando con tablas', function () {
 		cy.visit('https://www.w3schools.com/html/html_tables.asp')
 		cy.get('#customers')
 			.find('th')
@@ -147,5 +147,69 @@ describe('Interactuando con los elementos', () => {
 				const texto = $el.text()
 				expect(texto).to.contain('Bacchus')
 			})
+	})
+
+	it('Interactuando con date pickers', function () {
+		cy.visit('https://material.angular.io/components/datepicker/overview')
+		cy.get('datepicker-overview-example')
+			.find('input')
+			.eq(0)
+			.type('17/07/2022')
+
+		cy.get('datepicker-overview-example').find('svg').click()
+	})
+
+	it('Interactuando con modals', function () {
+		cy.visit('/modal-dialogs')
+		cy.get('#showSmallModal').click()
+		cy.get('#closeSmallModal').click()
+	})
+
+	it('Interactuando con popups', function () {
+		cy.visit('/alerts')
+
+		// const stub = cy.stub()
+		// cy.on('window:confirm', stub)
+
+		// cy.get('#confirmButton')
+		// 	.click()
+		// 	.then(() => {
+		// 		expect(stub.getCall(0)).to.be.calledWith(
+		// 			'Do you confirm action?'
+		// 		)
+		// 	})
+
+		// cy.get('#confirmButton').click()
+		// cy.on('window:confirm', (confirm) => {
+		// 	expect(confirm).to.eq('Do you confirm action?')
+		// })
+		// cy.contains('You selected Ok').should('exist')
+
+		cy.get('#confirmButton').click()
+		cy.on('window:confirm', (confirm) => {
+			expect(confirm).to.eq('Do you confirm action?')
+			return false
+		})
+		cy.contains('You selected Cancel').should('exist')
+	})
+
+	it('Interactuando con tooltips', function () {
+		cy.visit('/tool-tips')
+		cy.get('#toolTipButton').trigger('mouseover')
+		cy.contains('hovered over').should('exist')
+		cy.get('#toolTipButton').trigger('mouseout')
+		cy.contains('hovered over').should('not.exist')
+	})
+
+	it.only('Interactuando con drag and drop', function () {
+		cy.visit('/dragabble')
+		cy.get('#dragBox')
+			.trigger('mousedown', {
+				wich: 1,
+				pageX: 0,
+				pageY: 0,
+			})
+			.trigger('mousemove', { wich: 1, pageX: 300, pageY: 300 })
+			.trigger('mouseup')
 	})
 })
