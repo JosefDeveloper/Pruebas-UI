@@ -63,7 +63,7 @@ describe('Interactuando con los elementos', () => {
 		cy.get('label[for="hobbies-checkbox-3"]').click()
 	})
 
-	it.only('Extrayendo información', function () {
+	it('Extrayendo información', function () {
 		cy.visit('/automation-practice-form')
 		cy.get('#firstName').as('nombre')
 		cy.get('@nombre').type('Josef')
@@ -77,11 +77,75 @@ describe('Interactuando con los elementos', () => {
 		cy.get('@nombre').invoke('val').as('nombreGlobal')
 	})
 
-	it.only('Compartiendo información', function () {
+	it('Compartiendo información', function () {
 		cy.visit('/automation-practice-form')
 		cy.get('#lastName').as('apellido')
 		cy.get('@apellido').type(texto)
 
 		cy.get('#firstName').type(this.nombreGlobal)
+	})
+
+	it('Interactuando con los dropdown (select)', function () {
+		cy.visit('https://itera-qa.azurewebsites.net/home/automation')
+		cy.get('.custom-select').select(5)
+		cy.get('.custom-select').select('7').should('have.value', '7')
+		cy.get('.custom-select').select('Spain').should('have.value', '2')
+	})
+
+	it('Interactuando con los dropdown (select) dinamico', function () {
+		cy.visit('https://react-select.com/home')
+		cy.get('#react-select-6-input').type(' ')
+		cy.get('#react-select-6-listbox')
+			.children()
+			.children()
+			.each(($el, index, $list) => {
+				if ($el.text() === 'Green') {
+					// $el.on('click')
+					$el.click()
+				}
+			})
+
+		// cy.get('#react-select-6-option-3').click()
+	})
+
+	it.only('Interactuando con tablas', function () {
+		cy.visit('https://www.w3schools.com/html/html_tables.asp')
+		cy.get('#customers')
+			.find('th')
+			.each(($el) => {
+				cy.log($el.text())
+			})
+
+		cy.get('#customers')
+			.find('th')
+			.first()
+			.invoke('text')
+			.should('equal', 'Company')
+
+		cy.get('#customers')
+			.find('th')
+			.eq(2)
+			.invoke('text')
+			.should('equal', 'Country')
+
+		cy.get('#customers').find('tr').should('have.length', 7)
+
+		cy.get('#customers')
+			.find('tr')
+			.eq(3)
+			.find('td')
+			.eq(2)
+			.invoke('text')
+			.should('equal', 'Austria')
+
+		cy.get('#customers')
+			.find('tr')
+			.eq(5)
+			.find('td')
+			.eq(0)
+			.then(($el) => {
+				const texto = $el.text()
+				expect(texto).to.contain('Bacchus')
+			})
 	})
 })
